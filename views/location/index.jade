@@ -1,0 +1,110 @@
+extends ../layout
+
+block content
+ nav.app__nav
+  div.col-md-6.col-md-offset-3.text-center
+   h1 Current location
+  div.clearfix
+ div#map_canvas.location__body
+ div.location__menu
+  div.row.col-md-10.col-md-offset-1.col-ms-10.col-ms-offset-1.col-xs-10.col-xs-offset-1
+    p.col-md-4.col-ms-4.col-xs-4 Perimeter
+    span(href="" class="btn col-md-2 col-ms-2 col-xs-2" id="homebaseMin") -
+    p#perimeter.col-md-2.col-ms-2.col-xs-2.text-right 0.5 
+    p.col-md-2.col-ms-2.col-xs-2.text-center km
+    span(href="" class="btn col-md-2 col-ms-2 col-xs-2" id="homebasePlus") +
+  div.row.col-md-10.col-md-offset-1.col-ms-10.col-ms-offset-1.col-xs-10.col-xs-offset-1
+   span(id="homebaseBtn" class="btn col-md-12 col-ms-12 col-xs-12") Save as homebase
+  
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js')
+ script(type='text/javascript' src='../javascripts/index.js')
+ script(src="/socket.io/socket.io.js")
+ script.
+  var initialize = function(){
+    var map_canvas = document.getElementById('map_canvas');
+    
+    // Google map config
+    map_options = {
+      center: new google.maps.LatLng(localStorage.getItem('latitude'), localStorage.getItem('longitude')),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI:true
+    }
+    map = new google.maps.Map(map_canvas, map_options);
+
+    // Google map marker en center position
+    var center = new google.maps.Marker({
+      position: new google.maps.LatLng(localStorage.getItem('latitude'), localStorage.getItem('longitude')),
+      map: map,
+      icon: '/images/marker.svg'
+    });
+
+    // Perimeter circle color and border
+    circle = new google.maps.Circle({
+      map: map,
+      radius: 500,    // 10 miles in metres
+      strokeColor: '#835fa5',
+      strokeWeight: 0,
+      fillColor: '#835fa5'
+    });
+    circle.bindTo('center', center, 'position');
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  $(document).ready(function(){
+    // Larger perimeter, enlarge circle & zoom out
+    $("#homebasePlus").on("click", function(){
+      perimeterval = parseFloat($("#perimeter").text());
+      if(perimeterval < 2.5)
+      {
+        perimeter = perimeterval + 0.5;
+        $("#perimeter").text(perimeter);
+        map.setZoom(map.zoom - 1);
+        circle.setRadius(circle.radius + 500);
+      } else {
+        console.log("Woops, don't walk too far!");
+      }
+      console.log(perimeterval);
+    });
+
+    // Smaller perimeter, shrink circle & zoom in
+    $("#homebaseMin").on("click", function(){
+      perimeterval = parseFloat($("#perimeter").text());
+      if(perimeterval > 0.5)
+      {
+       perimeter = perimeterval - 0.5;
+       $("#perimeter").text(perimeter);
+       map.setZoom(map.zoom + 1);
+       circle.setRadius(circle.radius - 500);
+      } else {
+       console.log("Woops, if you don't want to walk, just sit down!");
+      }   
+      console.log(perimeterval);
+    });
+
+    // Save perimeter and proceed
+    $("#homebaseBtn").on("click", function(){
+      perimeter = $("#perimeter").text();
+      console.log(perimeter);
+      switch(perimeter)
+      {
+        case "0.5":
+          localStorage.perimeter = 500;
+          break;
+        case "1":
+          localStorage.perimeter = 1000;
+          break;
+        case "1.5":
+          localStorage.perimeter = 1500;
+          break;
+        case "2":
+          localStorage.perimeter = 2000;
+          break;
+        case "2.5":
+          localStorage.perimeter = 2500;
+          break;
+      }
+      window.location.href="/choice";
+    });
+  });

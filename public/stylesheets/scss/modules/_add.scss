@@ -1,0 +1,42 @@
+.add__body
+{
+	margin-top: 1rem;
+
+	label
+	{
+		color: $color-6;
+	}
+
+	form
+	{
+		margin-bottom: 1.5rem;
+	}
+
+	.form-control
+	{
+		margin-bottom: 1rem;
+		border-color: $color-6;
+	}
+
+	.btn
+	{
+		background-color: $primary-text-color;
+	}
+
+	.add__location
+	{
+		.add__location__data
+		{
+			display: none;
+		}
+
+		.add__location__loading
+		{
+			height: 10.8rem;
+			background-image: url("/images/gpsgreen.svg");
+			background-repeat: no-repeat;
+			background-size: 50% 50%;
+			background-position: center;
+		}
+	}
+}

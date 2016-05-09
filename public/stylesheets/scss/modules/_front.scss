@@ -1,0 +1,40 @@
+.front__div
+{
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	background-color: $color-1;
+	position: relative;
+
+	.btn
+	{
+		font-weight: bold;
+		border-color: $primary-text-color;
+		color: $primary-text-color;
+
+		.btn:hover
+		{
+			color: $color-1;
+			background-color: $primary-text-color;
+		}
+	}
+
+	.front__loader
+	{
+		display: none;
+		width: 100%;
+		height: 3.4rem;
+		background-image: url("/images/gps.svg");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 3.4rem 3.4rem;
+		border: none;
+	}
+}
+
+.front__logo
+{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}

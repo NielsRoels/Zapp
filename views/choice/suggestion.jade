@@ -1,0 +1,88 @@
+extends ../layout
+
+block content
+ nav.app__nav
+  div.col-md-2.col-ms-2.col-xs-2.text-right.app__nav__back
+   a(href="/choice")
+    img(src="/images/back.svg")
+  div.col-md-8.col-ms-8.col-xs-8.text-center
+   h1 Suggestion
+  div.clearfix
+ div.suggestion__body
+  div.suggestion__body__container
+   article.col-md-12.suggestion__body__container__article
+    div.row
+      h1.col-md-11.col-ms-11.col-xs-10.suggestion__title
+      span.col-md-1.col-ms-1.col-xs-2.suggestion__close
+    div.row
+      p.col-md-12.suggestion__description 
+ div.suggestion__menu
+  div.container
+    div.row
+      h1.col-md-12.col-ms-12.col-xs-12.suggestion__title
+    div.row
+      p.col-md-8.col-ms-8.col-xs-8.suggestion__adress
+      p.col-md-4.col-ms-4.col-xs-4.suggestion__menu__p.suggestion__menu__p--distance
+  div.col-md-6.col-ms-6.col-xs-6
+   form
+    input(type="hidden" id="sugg__lat" class="suggestion__lat")
+    input(type="hidden" id="sugg__long" class="suggestion__long")
+    button(id="acceptedBtn" type="submit" class="btn col-md-12 col-ms-12 col-xs-12") Accept
+  div.col-md-6.col-ms-6.col-xs-6
+   form
+    button(id="declinedBtn" type="submit" class="btn col-md-12 col-ms-12 col-xs-12") Decline
+
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type="text/javascript" src="../javascripts/index.js")
+ script(src="/socket.io/socket.io.js")
+ script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry")
+ script.
+  $(document).ready(function(){
+    var socket = io.connect('http://localhost:3000');
+    var color1 = "#835fa5";
+    var color2 = "#da905e";
+    var color3 = "#9ac856";
+    var color4 = "#4a5a94";
+    var color5 = "#d5c956";
+    var color6 = "#276f72";
+    var theme = localStorage.getItem("choice");
+
+    switch(theme)
+    {
+        case "Home":
+          $(".app__nav").css("background-color", color2);
+          $(".btn").css("border-color", color2);
+          $(".btn").css("color", color2);
+          break;
+        case "Restaurant":
+          socket.emit("goEat", {theme: theme});
+          $(".app__nav").css("background-color", color3);
+          $(".btn").css("border-color", color3);
+          $(".btn").css("color", color3);
+          break;
+        case "Bar":
+          socket.emit("goDrink", {theme: theme});
+          $(".app__nav").css("background-color", color4);
+          $(".btn").css("border-color", color4);
+          $(".btn").css("color", color4);
+          break;
+        case "Landmark":
+          socket.emit("goSee", {theme: theme});
+          $(".app__nav").css("background-color", color1);
+          $(".btn").css("border-color", color1);
+          $(".btn").css("color", color1);
+          break;
+        case "Museum":
+          socket.emit("goCulture", {theme: theme});
+          $(".app__nav").css("background-color", color5);
+          $(".btn").css("border-color", color5);
+          $(".btn").css("color", color5);
+          break;
+        case "Add":
+          $(".app__nav").css("background-color", color6);
+          $(".btn").css("border-color", color6);
+          $(".btn").css("color", color6);
+          break;
+    }
+    console.log(theme);
+  });

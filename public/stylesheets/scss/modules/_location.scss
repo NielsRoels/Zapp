@@ -1,0 +1,43 @@
+.location__body
+{
+	width: 100%;
+	top: 5rem;
+	bottom: 10rem;
+	position: absolute;
+	background-color: yellow;
+}
+
+.location__menu
+{
+	display: block;
+	width: 100%;
+	height: 10rem;
+	position: absolute;
+	bottom: 0;
+
+	.row
+	{
+		padding: 0.8rem 0;
+	
+		p
+		{
+			font-weight: bold;
+			color: $color-1;
+			margin: 0;
+			padding: 0.6rem 0;
+		}
+
+		.btn
+		{
+			font-weight: bold;
+			border-color: $color-1;
+			color: $color-1;
+	
+			.btn:hover
+			{
+				color: $primary-text-color;
+				background-color: $color-1;
+			}
+		}
+	}
+}

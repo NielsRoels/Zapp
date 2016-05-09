@@ -1,0 +1,59 @@
+extends layout
+
+block content
+ div.front__div
+  div.splash.col-md-4.col-md-offset-4.col-ms-4.col-ms-offset-4.col-xs-6.col-xs-offset-3.front__logo
+   div.row.text-center
+    img(src="/images/zapp.svg", alt="placeholder")
+   div.row.text-center
+    span.btn.front__loader.text-center
+ 
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js')
+ script(type="text/javascript" src="../javascripts/index.js")
+ script(src="/socket.io/socket.io.js")
+ script.
+    var latitude = "";
+    var longitude = "";
+    var latdemo = 0;
+    var longdemo = 0;
+    var getLocation = function(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            console.log("Geolocation is not supported your browser");
+        }       
+    }
+    var showPosition = function(position){
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        console.log("Latitude: " + latitude);
+        console.log("Longitude: "  + longitude);
+    }
+    $(document).ready(function(){
+        var socket = io.connect('http://localhost:3000');
+        $(".front__loader").css("display", "block");
+        navigator.geolocation.getCurrentPosition(function(position){
+            if(typeof localStorage.latitude === 'undefined'  && typeof localStorage.longitude === 'undefined' ){
+                // Actual coordinates of device at the moment
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+            
+                // Stored actual Lat & Long to show it's working
+                localStorage.actuallatitude = latitude;
+                localStorage.actuallongitude = longitude;
+
+                // Fixed coordinates to use in demo
+                latdemo = 51.218474;
+                longdemo = 4.404872;
+                localStorage.latitude = latdemo;
+                localStorage.longitude = longdemo;
+
+                window.location.href="/location";
+            }
+            else
+            {
+                window.location.href="/choice";
+            }
+        });
+    });

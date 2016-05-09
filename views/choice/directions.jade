@@ -1,0 +1,159 @@
+extends ../layout
+
+block content
+ nav.app__nav
+  div.col-md-2.col-ms-2.col-xs-2.text-right.app__nav__back
+   a(href="/choice/route")
+    img(src="/images/back.svg")
+  div.col-md-8.col-ms-8.col-xs-8.text-center
+  div.clearfix
+ div#map_canvas.direction__map
+ div.direction__body
+   div.container
+    ul#directions
+          
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js?sensor=true&language=en')
+ script(type='text/javascript' src='../javascripts/index.js')
+ script(src="/socket.io/socket.io.js")
+ script.
+  var theme = localStorage.choice;
+  //var finishlat = localStorage.acceptLat;
+  //var finishlong = localStorage.acceptLong;
+  /*var initialize = function(){
+    var map_canvas = document.getElementById('map_canvas');
+    var map_options = {
+      center: new google.maps.LatLng(51.218474, 4.404872),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI:true
+    }
+    var map = new google.maps.Map(map_canvas, map_options);
+
+    var start = new google.maps.Marker({
+      position: new google.maps.LatLng(localStorage.latitude, localStorage.longitude),
+      map: map
+    });
+
+    var finish = new google.maps.Marker({
+      position: new google.maps.LatLng(finishlat, finishlong),
+      map: map
+    });
+
+    switch(theme)
+    {
+      case "Home":
+        start.setIcon('/images/markerAorange.svg');
+        finish.setIcon('/images/markerBorange.svg');
+        break;
+      case "Restaurant":
+        start.setIcon('/images/markerAgreen.svg');
+        finish.setIcon('/images/markerBgreen.svg');
+        break;
+      case "Bar":
+        start.setIcon('/images/markerAblue.svg');
+        finish.setIcon('/images/markerBblue.svg');
+        break;
+      case "Landmark":
+        start.setIcon('/images/markerA.svg');
+        finish.setIcon('/images/markerB.svg');
+        break;
+      case "Museum":
+        start.setIcon('/images/markerAyellow.svg');
+        finish.setIcon('/images/markerByellow.svg');
+        break;
+    }
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);*/
+  function calculateRoute(from, to){
+    var myOptions = {
+      zoom: 15,
+      center: new google.maps.LatLng(51.218474, 4.404872),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI:true,
+    };
+    var mapObject = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+    var directionsService = new google.maps.DirectionsService();
+    var directionsRequest = {
+      origin: from,
+      destination: to,
+      travelMode: google.maps.DirectionsTravelMode.WALKING,
+      unitSystem: google.maps.UnitSystem.METRIC
+    };
+    directionsService.route(
+      directionsRequest,
+      function(response, status)
+      {
+        if(status == google.maps.DirectionsStatus.OK)
+        {
+          new google.maps.DirectionsRenderer({
+            map: mapObject,
+            directions: response
+          });
+          showSteps(response);
+          console.log(response);
+        }
+        else
+        {
+          console.log("Unable to retrieve your route!");
+        }
+      }
+    );
+    function showSteps(directionResult){
+      var myRoute = directionResult.routes[0].legs[0];
+      for(var i = 0; i < myRoute.steps.length; i++){
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode(myRoute.steps[i].instructions.replace(new RegExp('<b>', 'g'), '').replace(new RegExp('</b>', 'g'), ''));
+        node.appendChild(textnode);
+        document.getElementById("directions").appendChild(node);
+      }
+    }
+  }
+
+  $(document).ready(function(){
+    var color1 = "#835fa5";
+    var color2 = "#da905e";
+    var color3 = "#9ac856";
+    var color4 = "#4a5a94";
+    var color5 = "#d5c956";
+    var color6 = "#276f72";
+    var theme = localStorage.getItem("choice");
+    var from = new google.maps.LatLng(localStorage.latitude, localStorage.longitude);
+    var to = new google.maps.LatLng(localStorage.acceptLat, localStorage.acceptLong);
+
+    calculateRoute(from, to);
+
+    switch(theme)
+    {
+        case "Home":
+          $(".app__nav").css("background-color", color2);
+          $(".direction__body").css("color", color2);
+          $(".direction__body span").css("color", color2);
+          $(".direction__img img").attr("src", "/images/straightorange.svg");
+          break;
+        case "Restaurant":
+          $(".app__nav").css("background-color", color3);
+          $(".direction__body").css("color", color3);
+          $(".direction__body span").css("color", color3);
+          $(".direction__img img").attr("src", "/images/straightgreen.svg");
+          break;
+        case "Bar":
+          $(".app__nav").css("background-color", color4);
+          $(".direction__body").css("color", color4);
+          $(".direction__body span").css("color", color4);
+          $(".direction__img img").attr("src", "/images/straightblue.svg");
+          break;
+        case "Landmark":
+          $(".app__nav").css("background-color", color1);
+          $(".direction__body").css("color", color1);
+          $(".direction__body span").css("color", color1);  
+          $(".direction__img img").attr("src", "/images/straight.svg");
+          break;
+        case "Museum":
+          $(".app__nav").css("background-color", color5);
+          $(".direction__body").css("color", color5);
+          $(".direction__body span").css("color", color5);
+          $(".direction__img img").attr("src", "/images/straightyellow.svg");
+          break;
+    }
+  });

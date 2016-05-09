@@ -1,0 +1,64 @@
+.route__body
+{
+	width: 100%;
+	top: 5rem;
+	bottom: 5rem;
+	position: absolute;
+	background-color: yellow;
+}
+
+.route__menu
+{
+	display: block;
+	width: 100%;
+	height: 5rem;
+	position: absolute;
+	bottom: 0;
+
+	.row
+	{
+		padding: 0.8rem 0;
+
+		div.col-xs-12
+		{
+			padding-right: 0;
+		}
+	}
+
+	.btn
+	{
+		font-weight: bold;
+		border-color: $color-1;
+		color: $color-1; 
+
+		.btn:hover
+		{
+			color: $primary-text-color;
+			background-color: $color-1;
+		}
+	}
+
+	.route__menu__p
+	{
+		text-align: right;
+		color: $color-1;
+		margin: 0;
+		padding: 0.5rem 1.5rem;
+	}
+
+	.route__menu__p--distance
+	{
+		background-image: url("/images/distance1.svg");
+		background-repeat: no-repeat;
+		background-size: 4.4rem 3rem;
+		background-position: left 1.5rem center;
+	}
+
+	.route__menu__p--time
+	{
+		background-image: url("/images/time1.svg");
+		background-repeat: no-repeat;
+		background-size: 4.4rem 3rem;
+		background-position: left 1.5rem center;
+	}
+}

@@ -1,0 +1,140 @@
+extends ../layout
+
+block content
+ nav.app__nav
+  div.col-md-2.col-ms-2.col-xs-2.text-right.app__nav__back
+   a(id="backRoute" href="/choice/suggestion")
+    img(src="/images/back.svg")
+  div.col-md-8.col-ms-8.col-xs-8.text-center
+  div.clearfix
+ div#map_canvas.route__body
+ div.route__menu
+  div.row.col-md-12.col-ms-12.col-xs-12
+    div.col-md-8.col-ms-8.col-xs-8
+      p.col-md-2.col-ms-2.col-xs-6.route__menu__p.route__menu__p--distance
+    div.col-md-4.col-ms-4.col-xs-4
+      a(href="/choice/directions" class="btn col-md-12 col-ms-12 col-xs-12") Start
+
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js')
+ script(type='text/javascript' src='../javascripts/index.js')
+ script(src="/socket.io/socket.io.js")
+ script.
+  var latitude = "";
+  var longitude = "";
+  var start = "";
+  var finish = "";
+  var theme = localStorage.choice;
+
+  navigator.geolocation.getCurrentPosition(function(position){
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+  });  
+  
+  var initialize = function(){
+    var map_canvas = document.getElementById('map_canvas');
+    var map_options = {
+      center: new google.maps.LatLng(51.218474, 4.404872),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI:true
+    }
+    var map = new google.maps.Map(map_canvas, map_options);
+
+    start = new google.maps.Marker({
+      position: new google.maps.LatLng(51.218474, 4.404872),
+      map: map
+    });
+
+    finish = new google.maps.Marker({
+      position: new google.maps.LatLng(localStorage.getItem('acceptLat'), localStorage.getItem('acceptLong')),
+      map: map
+    });
+
+    switch(theme)
+    {
+      case "Home":
+        start.setIcon('/images/markerAorange.svg');
+        finish.setIcon('/images/markerBorange.svg');
+        break;
+      case "Restaurant":
+        start.setIcon('/images/markerAgreen.svg');
+        finish.setIcon('/images/markerBgreen.svg');
+        break;
+      case "Bar":
+        start.setIcon('/images/markerAblue.svg');
+        finish.setIcon('/images/markerBblue.svg');
+        break;
+      case "Landmark":
+        start.setIcon('/images/markerA.svg');
+        finish.setIcon('/images/markerB.svg');
+        break;
+      case "Museum":
+        start.setIcon('/images/markerAyellow.svg');
+        finish.setIcon('/images/markerByellow.svg');
+        break;
+    }
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+  $(document).ready(function(){
+    var socket = io.connect('http://localhost:3000');
+    var color1 = "#835fa5";
+    var color2 = "#da905e";
+    var color3 = "#9ac856";
+    var color4 = "#4a5a94";
+    var color5 = "#d5c956";
+    var color6 = "#276f72";
+    var theme = localStorage.getItem("choice");
+
+    switch(theme)
+    {
+        case "Home":
+          $(".app__nav").css("background-color", color2);
+          $(".btn").css("border-color", color2);
+          $(".btn").css("color", color2);
+          $(".route__menu__p--distance").css('background-image', 'url("/images/distance3.svg")');
+          $(".route__menu__p--time").css('background-image', 'url("/images/time3.svg")');
+          $(".route__menu__p--distance").css('color', color2);
+          $(".route__menu__p--time").css('color', color2);
+          break;
+        case "Restaurant":
+          $(".app__nav").css("background-color", color3);
+          $(".btn").css("border-color", color3);
+          $(".btn").css("color", color3);
+          $(".route__menu__p--distance").css('background-image', 'url("/images/distance2.svg")');
+          $(".route__menu__p--time").css('background-image', 'url("/images/time2.svg")');
+          $(".route__menu__p--distance").css('color', color3);
+          $(".route__menu__p--time").css('color', color3);
+          break;
+        case "Bar":
+          $(".app__nav").css("background-color", color4);
+          $(".btn").css("border-color", color4);
+          $(".btn").css("color", color4);
+          $(".route__menu__p--distance").css('background-image', 'url("/images/distance4.svg")');
+          $(".route__menu__p--time").css('background-image', 'url("/images/time4.svg")');
+          $(".route__menu__p--distance").css('color', color4);
+          $(".route__menu__p--time").css('color', color4);
+          break;
+        case "Landmark":
+          $(".app__nav").css("background-color", color1);
+          $(".btn").css("border-color", color1);
+          $(".btn").css("color", color1);
+          $(".route__menu__p--distance").css('background-image', 'url("/images/distance1.svg")');
+          $(".route__menu__p--time").css('background-image', 'url("/images/time1.svg")');
+          $(".route__menu__p--distance").css('color', color1);
+          $(".route__menu__p--time").css('color', color1);
+          break;
+        case "Museum":
+          $(".app__nav").css("background-color", color5);
+          $(".btn").css("border-color", color5);
+          $(".btn").css("color", color5);
+          $(".route__menu__p--distance").css('background-image', 'url("/images/distance5.svg")');
+          $(".route__menu__p--time").css('background-image', 'url("/images/time5.svg")');
+          $(".route__menu__p--distance").css('color', color5);
+          $(".route__menu__p--time").css('color', color5);
+          break;
+    }
+    $(".route__menu__p--distance").text(localStorage.distance + "m");
+    console.log(theme);
+  });

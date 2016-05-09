@@ -1,0 +1,35 @@
+.app__nav
+{
+	display: block;
+	width: 100vw;
+	height: 5rem;
+	background-color: $color-1;
+
+	h1
+	{
+		font-size: 1.6rem;
+		font-weight: bold;
+		color: $primary-text-color;
+		margin: 0;
+		padding: 1.65rem;
+	}
+
+	.app__nav__back
+	{
+		padding: 1.35rem;
+		text-align: left;
+
+		a
+		{
+			font-size: 1.6rem;
+			font-weight: bold;
+			color: $primary-text-color;
+			text-decoration: none;
+
+			img
+			{
+				height: 2.3rem;
+			}
+		}
+	}
+}

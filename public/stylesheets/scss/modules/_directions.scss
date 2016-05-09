@@ -1,0 +1,59 @@
+.direction__map
+{
+	width: 100%;
+	height: 15rem;
+	top: 5rem;
+	position: absolute;
+	background-color: green;
+}
+
+.direction__body
+{
+	width: 100%;
+	top: 20rem;
+	bottom: 1rem;
+	position: absolute;
+	overflow: auto;
+
+	ul
+	{
+		padding: 0;
+		list-style: none;
+
+		li
+		{
+			font-size: 1.6rem;
+			font-weight: bold;
+			padding: 1rem;
+			border-bottom: 1px solid gray;
+
+			.direction__img
+			{
+				display: block;
+				width: 100%;
+				
+				img
+				{
+					width: 5rem;
+				}
+			}
+
+			span
+			{
+				font-size: 2rem;
+				font-weight: bold;
+				color: $color-1;
+			}
+
+			p
+			{
+				font-size: 1.4rem;
+			}
+		}
+
+		li:last-child
+		{
+			border-bottom: none;
+		}
+	}
+}

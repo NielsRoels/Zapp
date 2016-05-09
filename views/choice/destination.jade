@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+ div.destination__top
+ div.destination__body.text-center
+  h1 You've reached your destination!
+ div.destination__menu
+  div.col-md-12.col-ms-12.col-xs-12
+   a(href="/choice" class="btn col-md-12 col-ms-12 col-xs-12") New destination
+
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js')
+ script(type='text/javascript' src='../javascripts/index.js')
+ script(src="/socket.io/socket.io.js")
+ script.
+  $(document).ready(function(){
+   var socket = io.connect('http://localhost:3000');
+   var color1 = "#835fa5";
+   var color2 = "#da905e";
+   var color3 = "#9ac856";
+   var color4 = "#4a5a94";
+   var color5 = "#d5c956";
+   var theme = localStorage.getItem("choice");
+
+   switch(theme)
+   {
+      case "Home":
+        $(".destination__top").css("background-color", color2);
+        $(".destination__body").css("background-color", color2);
+        $(".destination__menu").css("background-color", color2);
+        break;
+      case "Restaurant":
+        $(".destination__top").css("background-color", color3);
+        $(".destination__body").css("background-color", color3);
+        $(".destination__menu").css("background-color", color3); 
+        break;
+      case "Bar":
+        $(".destination__top").css("background-color", color4);
+        $(".destination__body").css("background-color", color4);
+        $(".destination__menu").css("background-color", color4);
+        break;
+      case "Landmark":
+        $(".destination__top").css("background-color", color1);
+        $(".destination__body").css("background-color", color1);
+        $(".destination__menu").css("background-color", color1);
+        break;
+      case "Museum":
+      	$(".destination__top").css("background-color", color5);
+        $(".destination__body").css("background-color", color5);
+        $(".destination__menu").css("background-color", color5);
+        break;
+    }
+    console.log(theme);
+  });

@@ -1,0 +1,59 @@
+extends ../layout
+
+block content
+  nav.app__nav
+    div.col-md-2.col-ms-2.col-xs-2.text-right.app__nav__back
+      a(href="/choice")
+        img(src="/images/back.svg")
+    div.col-md-8.col-ms-8.col-xs-8.text-center
+      h1 Add a location
+    div.clearfix
+  div.add__body
+    div.container
+      div.row.col-xs-10.col-xs-offset-1
+        p You need to be on the location you want to add, to get the location right!
+        form(id="addForm" enctype="multipart/form-data" action="/api/photo" method="post")
+          label Theme
+          select(id="theme" name="theme" class="form-control")
+            option(value="") Choose a theme
+            option(value="Restaurant") Restaurant
+            option(value="Bar") Bar
+            option(value="Landmark") Landmark
+            option(value="Museum") Museum
+          label Location
+          input(type="text" id="location" name="location" class="form-control" required)
+          label Picture
+          input(type="file" id="spotPic" name="spotPic" class="form-control" required)
+          label Adress
+          input(type="text" id="adress" name="adress" class="form-control" required)
+          label Description
+          textarea(type="text" id="description" rows="5" name="description" class="form-control" required)
+          div.add__location
+            div.add__location__data
+              label Latitude
+              p.add__lat
+              label Longitude
+              p.add__long
+            div.add__location__loading
+          button(type="submit" class="btn" id="addBtn") Save location
+
+  
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+  script(type="text/javascript" src="../javascripts/index.js")
+  script(src="/socket.io/socket.io.js")
+  script.
+    $(document).ready(function(){
+      var color6 = "#276f72";
+      $(".app__nav").css("background-color", color6);
+      $(".btn").css("border-color", color6);
+      $(".btn").css("color", color6);    
+
+      navigator.geolocation.getCurrentPosition(function(position){
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        $(".add__lat").text(latitude);
+        $(".add__long").text(longitude);
+        $(".add__location__loading").css("display", "none");
+        $(".add__location__data").css("display", "block");
+      });
+    });

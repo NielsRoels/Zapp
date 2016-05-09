@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+ nav.app__nav
+  div.col-md-6.col-md-offset-3.text-center
+   h1 Where would you like to go?
+  div.clearfix
+ div.choice__body
+  div(id="choice__link__1" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--1")
+   a(href="choice/route")
+    p HOME
+  div(id="choice__link__2" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--2") 
+   a(href="choice/suggestion")
+    p RESTAURANT
+  div(id="choice__link__3" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--3") 
+   a(href="choice/suggestion")
+    p BAR
+  div(id="choice__link__4" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--4") 
+   a(href="choice/suggestion")
+    p LANDMARK
+  div(id="choice__link__5" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--5") 
+   a(href="choice/suggestion")
+    p MUSEUM
+  div(id="choice__link__6" class="col-md-6 col-ms-6 col-xs-6 choice__body__link choice__body__link--6") 
+   a(href="add/")
+    p ADD DATA
+
+ script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+ script(type="text/javascript" src="../javascripts/index.js")
+ script(src="/socket.io/socket.io.js")
+ script(type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry")

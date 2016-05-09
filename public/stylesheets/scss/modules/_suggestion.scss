@@ -1,0 +1,109 @@
+.suggestion__body
+{
+	width: 100%;
+	top: 5rem;
+	bottom: 15rem;
+	background-position: center;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+.suggestion__body__container
+{
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.suggestion__body__container__article
+{
+	display: none;
+	width: 90%;
+	height: 90%;
+	background-color: rgba(0,0,0,0.5);
+	border-radius: 0.4rem;
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	overflow: auto;
+
+	h1
+	{
+		font-size: 2.5rem;
+		font-weight: bold;
+		color: $primary-text-color;
+	}
+
+	p
+	{
+		font-size: 1.2rem;
+		color: $primary-text-color;
+	}
+
+	span
+	{
+		height: 2.7rem;
+		background-image: url("/images/close.svg");
+		background-repeat: no-repeat;
+		background-size: 15px 15px;
+		background-position: right 15px center;
+		margin: 2rem 0 1rem 0;
+	}
+
+	span:hover
+	{
+		cursor: pointer;
+	}
+}
+
+.suggestion__menu
+{
+	display: block;
+	width: 100%;
+	height: 15rem;
+	position: absolute;
+	bottom: 0;
+
+	h1
+	{
+		font-size: 2rem;
+		font-weight: bold;
+	}
+
+	.btn
+	{
+		font-weight: bold;
+		border-color: $color-1;
+		color: $color-1;
+		background-color: $primary-text-color;
+
+		.btn:hover
+		{
+			color: $primary-text-color;
+			background-color: $color-1;
+		}
+	}
+
+	.suggestion__menu__p
+	{
+		text-align: right;
+	}
+
+	.suggestion__menu__p--distance
+	{
+		background-image: url("/images/distance.svg");
+		background-repeat: no-repeat;
+		background-size: 2.2rem 1.5rem;
+		background-position: left 1.5rem center;
+	}
+
+	.suggestion__menu__p--time
+	{
+		background-image: url("/images/time.svg");
+		background-repeat: no-repeat;
+		background-size: 2.2rem 1.5rem;
+		background-position: left 1.5rem center;
+	}
+}
