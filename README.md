@@ -1,4 +1,4 @@
-# ZAPP
+## ZAPP
 
 ZAPP is de app voor de toerist die een stad graag verkent zonder al te veel voorbereiding. U krijgt de keuze uit 4 categoriëen (bar, restaurant, monument & museum) waaruit u kan kiezen en waar we u naartoe zullen brengen en dit binnen een zelf te bepalen straal rond een locatie die u verkiest.
 
